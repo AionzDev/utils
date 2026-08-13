@@ -190,7 +190,7 @@ function render(){
     ${S(EB('O quanto basta para se pagar')+(()=>{
       const needPct=d.spend>0?(d.setup+d.opexA)/d.spend*100:0;          // 0,08%
       const per1000=d.spend>0?(d.setup+d.opexA)/d.spend*1000:0;         // R$ por R$1.000
-      const centavos=Math.round(per1000*100);
+      const per1000Fmt=(Number(per1000)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
       const capt=N('captura');                                          // proposta (1%)
       const matKey=$('maturidade').value, mat=MAT[matKey]||MAT['Intermediário — gerenciado'];
       const nomeMat=matKey.split(' — ')[0];
@@ -210,7 +210,7 @@ function render(){
       return `
       <div style="background:#F2FAF6;border:1px solid #01A66C;border-radius:6px;padding:22px 24px">
         <p style="font:400 14.5px/1.55 'Raleway',sans-serif;color:#1A1A1C;margin:0 0 4px">Para o projeto cobrir <strong style="font-weight:700">o primeiro ano inteiro</strong>, basta economizar</p>
-        <div class="num" style="font:800 34px/1.05 'Manrope',sans-serif;color:#017A4F">${centavos} centavos <span style="font:600 16px/1 'Raleway',sans-serif;color:#4A4A4C">a cada R$ 1.000 comprados</span></div>
+        <div class="num" style="font:800 34px/1.05 'Manrope',sans-serif;color:#017A4F">${per1000Fmt} <span style="font:600 16px/1 'Raleway',sans-serif;color:#4A4A4C">a cada R$ 1.000 comprados</span></div>
         <p style="font:400 13px/1.5 'Raleway',sans-serif;color:#8A8A8C;margin:6px 0 0">Ou seja, <strong style="color:#4A4A4C;font-weight:600">${dec(needPct,2)}%</strong> do que a empresa já gasta em compras indiretas.</p>
 
         <!-- barra de maturidade: 15 segmentos = 0 a 15% do gasto -->

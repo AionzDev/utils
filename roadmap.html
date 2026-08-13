@@ -1,0 +1,516 @@
+<title>eBarn · Roadmap de Produto — Nutrien</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --green:#16a34a; --green-bright:#22c55e; --green-deep:#15803d; --green-soft:#dcfce7; --green-tint:#f0fdf4;
+  --ink:#1f2937; --ink-2:#5b6472; --muted:#94a0af; --line:#e8ebef; --line-2:#eef1f4;
+  --surface:#ffffff; --bg:#f6f8f9; --bg-2:#fbfcfc;
+  --blue:#3b82f6; --teal:#0d9488; --amber:#f59e0b; --rose:#e11d48; --indigo:#6366f1; --violet:#8b5cf6;
+  --good:#16a34a; --warn:#f59e0b; --crit:#ef4444; --info:#3b82f6;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+  --shadow-lg:0 4px 16px rgba(16,24,40,.08);
+  --r:12px; --r-sm:8px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5}
+.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3,h4{margin:0;font-weight:650;letter-spacing:-.01em;text-wrap:balance}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:6px}
+
+/* ---------- App shell ---------- */
+.app{display:grid;grid-template-columns:236px 1fr;min-height:100vh}
+.side{background:var(--surface);border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 22px}
+.brand .logo{width:34px;height:34px;flex:none}
+.brand b{font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.brand b span{color:var(--green)}
+.nav-i{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r-sm);color:var(--ink-2);font-weight:550;font-size:13.5px}
+.nav-i svg{width:18px;height:18px;flex:none;stroke-width:1.9}
+.nav-i.on{background:var(--green-tint);color:var(--green-deep)}
+.nav-i.on svg{color:var(--green)}
+.side-foot{margin-top:auto;padding:14px 12px;border-top:1px solid var(--line-2);font-size:11.5px;color:var(--muted)}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:20}
+.crumb{font-size:13px;color:var(--muted);font-weight:550}
+.crumb b{color:var(--ink-2)}
+.who{display:flex;align-items:center;gap:16px}
+.who .u{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.who .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#d1fae5,#a7f3d0);display:grid;place-items:center;color:var(--green-deep);font-weight:700;font-size:12px}
+.who .ic{width:19px;height:19px;color:var(--muted);stroke-width:1.9}
+.content{padding:26px 30px 60px;max-width:1320px;width:100%}
+
+/* ---------- Roadmap intro ---------- */
+.rm-hero{background:linear-gradient(180deg,#ffffff,var(--green-tint));border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;display:flex;justify-content:space-between;gap:24px;align-items:flex-start;flex-wrap:wrap}
+.rm-hero h1{font-size:22px}
+.rm-hero .sub{color:var(--ink-2);font-size:14px;margin-top:6px;max-width:62ch}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:4px 9px;border-radius:20px}
+.tag.now{background:#eef1f4;color:#64748b}
+.tag.rm{background:var(--green);color:#fff}
+.tag.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.9}
+
+/* ---------- Tabs ---------- */
+.tabs{display:flex;gap:6px;margin:24px 0 4px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);padding:10px 16px;border-radius:10px;font-weight:600;font-size:13.5px;display:flex;align-items:center;gap:9px;transition:.15s}
+.tab .n{font-size:11px;font-weight:700;color:var(--muted);background:var(--bg);border-radius:6px;padding:1px 6px}
+.tab:hover{border-color:#d5dbe1}
+.tab.on{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 2px 8px rgba(22,163,74,.25)}
+.tab.on .n{background:rgba(255,255,255,.22);color:#fff}
+
+.panel{display:none;animation:fade .28s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.panel{animation:none}}
+
+/* ---------- Section headers ---------- */
+.sec{margin:30px 0 14px;display:flex;align-items:center;gap:12px}
+.sec h2{font-size:16px}
+.sec .hint{color:var(--muted);font-size:12.5px;font-weight:500}
+.sec-lead{color:var(--ink-2);font-size:13.5px;margin:-6px 0 16px;max-width:78ch}
+
+/* ---------- Cards / KPI ---------- */
+.grid{display:grid;gap:14px}
+.k7{grid-template-columns:repeat(auto-fill,minmax(178px,1fr))}
+.k5{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.kpi{padding:15px 16px;border-left:4px solid var(--edge,var(--green));position:relative}
+.kpi .lab{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px}
+.kpi .val{font-size:26px;font-weight:750;letter-spacing:-.02em;margin-top:7px;color:var(--vc,var(--ink))}
+.kpi .foot{font-size:11.5px;color:var(--ink-2);margin-top:5px}
+.kpi .q{width:14px;height:14px;border-radius:50%;border:1.4px solid var(--muted);color:var(--muted);font-size:9px;display:inline-grid;place-items:center;font-weight:700;cursor:help}
+.chip-rm{position:absolute;top:12px;right:12px;font-size:9px;font-weight:800;letter-spacing:.04em;color:var(--green-deep);background:var(--green-soft);padding:2px 7px;border-radius:20px;text-transform:uppercase}
+
+/* KPI legend card (acronym + definition) */
+.kpi.def .name{font-size:12px;font-weight:600;color:var(--ink-2);margin-top:2px}
+.kpi.def .desc{font-size:12px;color:var(--ink-2);margin-top:9px;line-height:1.45}
+.kpi.def .bar{height:6px;border-radius:20px;background:var(--line-2);margin-top:12px;overflow:hidden}
+.kpi.def .bar>i{display:block;height:100%;border-radius:20px;background:var(--edge)}
+
+/* ---------- Panels / charts wrap ---------- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:1080px){.two,.three{grid-template-columns:1fr}}
+.pane{padding:18px 20px}
+.pane h3{font-size:14.5px}
+.pane .ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:5px}
+.b-up{background:#e7f7ee;color:#0f7a3d}
+.b-flat{background:#eef2f7;color:#5b6472}
+.b-down{background:#fdeaef;color:#be123c}
+
+/* ---------- Scorecard table ---------- */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700;padding:0 12px 10px;border-bottom:1px solid var(--line)}
+.tbl td{padding:12px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .co{font-weight:600}
+.sub{color:var(--ink-2);font-size:12px}
+.score{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-variant-numeric:tabular-nums}
+.score .ring{width:34px;height:34px;flex:none}
+.mini{display:flex;gap:3px;align-items:flex-end;height:24px}
+.mini i{width:7px;border-radius:2px 2px 0 0;background:var(--edge,var(--blue));opacity:.85}
+.stk{display:flex;height:8px;width:120px;border-radius:20px;overflow:hidden;background:var(--line-2)}
+.stk i{height:100%}
+.stk i+i{margin-left:2px}
+.leg-inline{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:var(--ink-2)}
+.leg-inline span{display:inline-flex;align-items:center;gap:6px}
+.leg-inline b{width:9px;height:9px;border-radius:3px;display:inline-block}
+
+.nps{display:inline-flex;align-items:center;gap:8px}
+.nps .g{width:70px;height:8px;border-radius:20px;background:linear-gradient(90deg,#fecaca,#fde68a,#bbf7d0);position:relative}
+.nps .g i{position:absolute;top:-3px;width:3px;height:14px;border-radius:2px;background:var(--ink);transform:translateX(-50%)}
+
+/* ---------- Kanban ---------- */
+.kanban{display:grid;grid-auto-flow:column;grid-auto-columns:265px;gap:14px;overflow-x:auto;padding:4px 2px 14px}
+.col{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px;min-height:120px}
+.col-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.col-h .t{font-size:12.5px;font-weight:650}
+.col-h .c{font-size:10.5px;font-weight:700;color:var(--green-deep);background:var(--green-soft);border-radius:20px;padding:2px 8px}
+.col-h .c.gray{color:#64748b;background:#eef1f4}
+.col-h .c.amber{color:#b45309;background:#fef3c7}
+.col-h .c.red{color:#b91c1c;background:#fee2e2}
+.col .time{font-size:10.5px;color:var(--muted);margin:-6px 0 10px;display:flex;align-items:center;gap:5px}
+.oc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin-bottom:9px;box-shadow:var(--shadow)}
+.oc .r1{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.oc .fil{font-size:10px;font-weight:700;color:var(--green-deep);background:var(--green-soft);border-radius:6px;padding:2px 7px;display:inline-flex;align-items:center;gap:4px}
+.oc .id{font-size:11px;font-weight:700;color:var(--muted)}
+.oc .ti{font-size:12.5px;font-weight:600;line-height:1.35;margin-bottom:9px}
+.oc .meta{display:flex;align-items:center;gap:12px;font-size:10.5px;color:var(--ink-2)}
+.oc .meta .m{display:inline-flex;align-items:center;gap:4px}
+.oc .st{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:10.5px;font-weight:600}
+.oc.hl{border-color:var(--green);box-shadow:0 0 0 3px rgba(22,163,74,.12)}
+
+/* Follow-up timeline */
+.fu{display:flex;gap:0;margin-top:10px}
+.fu .s{flex:1;text-align:center;position:relative}
+.fu .s .dot{width:22px;height:22px;border-radius:50%;margin:0 auto;display:grid;place-items:center;background:var(--line-2);color:var(--muted);border:2px solid var(--surface);position:relative;z-index:2}
+.fu .s .dot svg{width:12px;height:12px;stroke-width:2.4}
+.fu .s.done .dot{background:var(--green);color:#fff}
+.fu .s.now .dot{background:#fff;border:2px solid var(--green);color:var(--green);box-shadow:0 0 0 4px var(--green-soft)}
+.fu .s .lb{font-size:9.5px;font-weight:600;color:var(--ink-2);margin-top:5px;line-height:1.2}
+.fu .s .dt{font-size:9px;color:var(--muted)}
+.fu .s::after{content:"";position:absolute;top:11px;left:50%;width:100%;height:2px;background:var(--line-2);z-index:1}
+.fu .s.done::after{background:var(--green)}
+.fu .s:last-child::after{display:none}
+
+/* NF conciliation */
+.nf{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.nf .row{display:grid;grid-template-columns:1.6fr .8fr .8fr auto;gap:10px;padding:11px 14px;font-size:12.5px;align-items:center;border-bottom:1px solid var(--line-2)}
+.nf .row:last-child{border-bottom:0}
+.nf .row.head{background:var(--bg);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700}
+.pill{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-flex;gap:5px;align-items:center;white-space:nowrap}
+.pill.ok{background:#e7f7ee;color:#0f7a3d}
+.pill.div{background:#fef3c7;color:#b45309}
+.pill.wait{background:#eef1f4;color:#64748b}
+
+/* ---------- SVG charts ---------- */
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.gridln{stroke:var(--line-2);stroke-width:1}
+.axtx{fill:var(--muted);font-size:9px;font-family:var(--sans)}
+.sm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.sm{border:1px solid var(--line);border-radius:10px;padding:14px 14px 10px;background:var(--surface)}
+.sm .h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.sm .h .t{font-size:12.5px;font-weight:650}
+.sm .cover{font-size:11px;color:var(--ink-2);margin-top:8px;display:flex;justify-content:space-between}
+.sm .cover b{font-weight:700}
+
+/* stock coverage bars */
+.cov{display:flex;flex-direction:column;gap:11px}
+.cov .r{display:grid;grid-template-columns:180px 1fr 62px;gap:12px;align-items:center;font-size:12.5px}
+.cov .track{height:20px;background:var(--line-2);border-radius:6px;position:relative;overflow:hidden}
+.cov .track i{position:absolute;left:0;top:0;height:100%;border-radius:6px}
+.cov .track .thr{position:absolute;top:-3px;height:26px;width:2px;background:var(--ink);opacity:.35}
+.cov .d{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* insight cards */
+.ins{display:flex;gap:13px;padding:16px 18px}
+.ins .ic{width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;color:#fff}
+.ins h4{font-size:13.5px;margin-bottom:4px}
+.ins p{margin:0;font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.ins .act{margin-top:9px;font-size:12px;font-weight:650;color:var(--green-deep);display:inline-flex;align-items:center;gap:6px}
+.deadtbl td .v{font-weight:700;color:var(--crit)}
+
+.note{font-size:11.5px;color:var(--muted);margin-top:10px;display:flex;gap:7px;align-items:flex-start}
+.note svg{width:14px;height:14px;flex:none;margin-top:1px}
+footer{padding:22px 30px 40px;color:var(--muted);font-size:11.5px;border-top:1px solid var(--line);margin-top:20px}
+</style>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="side">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#16a34a" stroke-width="3"/><path d="M14 27V15c0-1 .8-2 2.2-2 4.2 0 7 2.4 7 6s-3 6-7 6h-2.2Z" fill="#16a34a"/><path d="M20 13c3-4 8-4 8-4s-1 6-5 7" stroke="#22c55e" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <b>e<span>Barn</span></b>
+    </div>
+    <div class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5M5 9v11h14V9" stroke-linecap="round" stroke-linejoin="round"/></svg>Início</div>
+    <div class="nav-i on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round"/></svg>Gestor de Compras</div>
+    <div class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 5a3 3 0 0 1 0 6M21 20c0-2.5-1.5-4.6-3.6-5.5" stroke-linecap="round"/></svg>Usuários</div>
+    <div class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12Z" stroke-linecap="round" stroke-linejoin="round"/></svg>Gestor de Chats</div>
+    <div class="side-foot">Visão de produto<br>Roadmap · Cot.ai / eBarn</div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="top">
+      <div class="crumb">Gestor de Compras <b>›</b> <b>Roadmap de Produto</b></div>
+      <div class="who">
+        <div class="u"><span class="av">RO</span>RONAN OLIVEIRA</div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M13.7 21a2 2 0 0 1-3.4 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="rm-hero">
+        <div>
+          <h1>Roadmap de Produto — Cot.ai / eBarn</h1>
+          <p class="sub">Três frentes de evolução da esteira de compras, projetadas sobre a operação real da <b>Nutrien</b>. Cada tela abaixo é uma proposta de alta fidelidade; os itens marcados como <b>Roadmap</b> ainda não existem hoje.</p>
+          <div class="legend">
+            <span class="tag now dot">Já existe hoje</span>
+            <span class="tag rm dot">Roadmap — proposto</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab on" data-p="p1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M8 15l3-4 3 3 5-7" stroke-linecap="round" stroke-linejoin="round"/></svg>Indicadores &amp; KPIs <span class="n">01</span></button>
+        <button class="tab" data-p="p2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="10" rx="1"/><rect x="17" y="4" width="4" height="14" rx="1"/></svg>Esteira de Compras <span class="n">02</span></button>
+        <button class="tab" data-p="p3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a5 5 0 0 1 5 5c0 2-1 3-1 4H8c0-1-1-2-1-4a5 5 0 0 1 5-5ZM9 17h6M10 21h4" stroke-linecap="round" stroke-linejoin="round"/></svg>Inteligência Agêntica <span class="n">03</span></button>
+      </div>
+
+      <!-- ============ PANEL 1 — KPIs ============ -->
+      <section class="panel on" id="p1">
+        <div class="sec"><h2>Métricas Cot.ai — Cotações Fechadas</h2><span class="tag now">Já existe hoje</span><span class="hint">período: 6 meses</span></div>
+        <p class="sec-lead">Base operacional que a plataforma já entrega. O roadmap <b>aprimora</b> estes números com precisão de fonte e recorte por categoria/filial.</p>
+        <div class="grid k7">
+          <div class="card kpi" style="--edge:var(--blue)"><div class="lab">Cotações Finalizadas <i class="q" title="Ofertas com fechamento de ordem no período">?</i></div><div class="val tnum">82</div><div class="foot">período de 6 meses</div></div>
+          <div class="card kpi" style="--edge:var(--green)"><div class="lab">Valor Cotado</div><div class="val tnum">R$ 624.284</div><div class="foot">soma das ofertas cotadas</div></div>
+          <div class="card kpi" style="--edge:var(--green)"><div class="lab">Valor Comprado</div><div class="val tnum">R$ 409.997</div><div class="foot">ordens efetivadas</div></div>
+          <div class="card kpi" style="--edge:var(--green-bright)"><div class="lab">Saving Negociação</div><div class="val tnum" style="--vc:var(--green)">R$ 136.185</div><div class="foot">ganho vs 1ª proposta</div></div>
+          <div class="card kpi" style="--edge:var(--teal)"><div class="lab">Saving %</div><div class="val tnum" style="--vc:var(--teal)">33,2%</div><div class="foot">sobre o valor cotado</div></div>
+          <div class="card kpi" style="--edge:var(--amber)"><div class="lab">Taxa de Resposta</div><div class="val tnum" style="--vc:#b45309">78,7%</div><div class="foot">fornecedores que responderam</div></div>
+          <div class="card kpi" style="--edge:var(--rose)"><div class="lab">Quórum Médio</div><div class="val tnum" style="--vc:var(--rose)">1,5</div><div class="foot">propostas válidas / cotação</div></div>
+        </div>
+
+        <div class="sec"><h2>Novos Indicadores de Supply</h2><span class="tag rm">Roadmap</span></div>
+        <p class="sec-lead">Indicadores clássicos de cadeia de suprimentos que hoje não existem na plataforma — cada um com a sigla explicada, para a área de compras se comparar a benchmarks de mercado.</p>
+        <div class="grid k5">
+          <div class="card kpi def" style="--edge:var(--green)"><span class="chip-rm">Novo</span><div class="lab">OTIF</div><div class="name">On Time In Full</div><div class="val tnum" style="--vc:var(--green)">87,4%</div><div class="desc">Pedidos entregues <b>no prazo E completos</b> (quantidade certa, item certo). O indicador mais rigoroso da cadeia.</div><div class="bar"><i style="width:87%"></i></div></div>
+          <div class="card kpi def" style="--edge:var(--blue)"><span class="chip-rm">Novo</span><div class="lab">OTD</div><div class="name">On Time Delivery</div><div class="val tnum" style="--vc:var(--blue)">91,2%</div><div class="desc">Pedidos entregues <b>dentro do prazo</b> acordado, independente da completude.</div><div class="bar"><i style="width:91%"></i></div></div>
+          <div class="card kpi def" style="--edge:var(--teal)"><span class="chip-rm">Novo</span><div class="lab">POF</div><div class="name">Perfect Order Fulfillment</div><div class="val tnum" style="--vc:var(--teal)">94,6%</div><div class="desc">Itens efetivamente atendidos <b>vs. solicitados</b> — mede ruptura e substituição na entrega.</div><div class="bar"><i style="width:95%"></i></div></div>
+          <div class="card kpi def" style="--edge:var(--indigo)"><span class="chip-rm">Novo</span><div class="lab">OCT</div><div class="name">Order Cycle Time</div><div class="val tnum" style="--vc:var(--indigo)">8,3 <span style="font-size:14px">dias</span></div><div class="desc">Tempo médio do ciclo — da <b>requisição ao recebimento</b>. Base para dimensionar estoque de segurança.</div><div class="bar"><i style="width:66%"></i></div></div>
+          <div class="card kpi def" style="--edge:var(--amber)"><span class="chip-rm">Novo</span><div class="lab">SLA</div><div class="name">Aderência ao Nível de Serviço</div><div class="val tnum" style="--vc:#b45309">82,5%</div><div class="desc">Cumprimento do prazo-alvo por tipo: <b>10 dias</b> materiais/serviços · <b>4 dias</b> delegadas.</div><div class="bar"><i style="width:82%"></i></div></div>
+        </div>
+
+        <div class="sec"><h2>Guia para Análise de Fornecedores</h2><span class="tag rm">Roadmap</span></div>
+        <p class="sec-lead">Score composto por fornecedor, decomposto nos três eixos que a área controla: <b>qualidade do cadastro</b>, <b>velocidade de resposta</b> e <b>qualidade da resposta</b>. Ordena quem priorizar e quem desenvolver.</p>
+        <div class="card pane">
+          <table class="tbl">
+            <thead><tr><th>Fornecedor</th><th>Categoria</th><th>Score composto</th><th>Cadastro · Velocidade · Qualidade</th><th>Cotações</th></tr></thead>
+            <tbody id="forn"></tbody>
+          </table>
+          <div class="leg-inline"><span><b style="background:var(--teal)"></b> Qualidade do cadastro</span><span><b style="background:var(--blue)"></b> Velocidade de resposta</span><span><b style="background:var(--indigo)"></b> Qualidade da resposta</span></div>
+        </div>
+
+        <div class="sec"><h2>Rackeamento de Compradores</h2><span class="tag rm">Roadmap</span></div>
+        <p class="sec-lead">Mesma lógica aplicada ao time interno — e um eixo a mais que muda o jogo: o <b>NPS da área interna atendida</b>, medindo a satisfação de quem depende de compras.</p>
+        <div class="card pane">
+          <table class="tbl">
+            <thead><tr><th>Comprador</th><th>Score de desempenho</th><th>Ciclo médio (OCT)</th><th>Saving gerado</th><th>NPS da área atendida</th></tr></thead>
+            <tbody id="comp"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ PANEL 2 — ESTEIRA ============ -->
+      <section class="panel" id="p2">
+        <div class="sec"><h2>Quadro de Solicitações</h2><span class="tag now">Já existe hoje</span></div>
+        <p class="sec-lead">A esteira Kanban que a Nutrien já opera — da requisição à cotação concluída. As ordens abaixo são reais do piloto (nº 649–660).</p>
+        <div class="kanban" id="kanban"></div>
+
+        <div class="sec"><h2>Follow-up de Compras</h2><span class="tag rm">Roadmap</span><span class="hint">nos cards já concluídos</span></div>
+        <p class="sec-lead">Hoje a esteira termina em “Concluída”. O roadmap acompanha o que acontece <b>depois do fechamento</b>: faturou → saiu para entrega → chegou — alimentando OTIF/OTD automaticamente.</p>
+        <div class="two">
+          <div class="card oc hl" style="padding:16px 18px">
+            <div class="r1"><span class="fil"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg> 01 Filial · 0103</span><span class="id">#221</span></div>
+            <div class="ti" style="font-size:14px">Lanterna Refletora — 40 un · MIXBRASILIS ATACADISTA</div>
+            <div class="meta"><span class="m">📅 30/07/26</span><span class="m">💰 R$ 3.180</span><span class="m">🏭 Rio Verde-GO</span></div>
+            <div class="st" style="color:var(--green-deep)">Acompanhamento pós-ordem</div>
+            <div class="fu">
+              <div class="s done"><div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lb">Ordem<br>fechada</div><div class="dt">30/07</div></div>
+              <div class="s done"><div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lb">Faturou<br>(NF-e)</div><div class="dt">02/08</div></div>
+              <div class="s now"><div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></div><div class="lb">Saiu para<br>entrega</div><div class="dt">05/08</div></div>
+              <div class="s"><div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12l6 6L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lb">Chegou<br>(recebido)</div><div class="dt">—</div></div>
+            </div>
+            <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg> Cada etapa registra data e responsável — a diferença entre “prazo prometido” e “chegou” vira OTIF/OTD sem digitação manual.</div>
+          </div>
+
+          <div class="card pane">
+            <div class="ph"><h3>Registrar &amp; Conciliar Notas Fiscais</h3><span class="tag rm">Roadmap</span></div>
+            <p class="sub" style="margin:-4px 0 14px">Cruzamento automático da NF-e recebida contra a ordem fechada — quantidade, preço e item. Divergências sobem para o comprador antes do pagamento.</p>
+            <div class="nf">
+              <div class="row head"><span>Item da ordem #221</span><span>Pedido</span><span>NF-e 8842</span><span>Status</span></div>
+              <div class="row"><span>Lanterna Refletora LED</span><span class="tnum">40 un · R$ 79,50</span><span class="tnum">40 un · R$ 79,50</span><span class="pill ok">✓ Conciliado</span></div>
+              <div class="row"><span>Suporte de fixação</span><span class="tnum">40 un · R$ 12,00</span><span class="tnum">40 un · R$ 13,80</span><span class="pill div">⚠ Preço diverge</span></div>
+              <div class="row"><span>Cabo PP 2×1,5mm</span><span class="tnum">60 m · R$ 4,20</span><span class="tnum">— aguardando</span><span class="pill wait">◷ Sem NF</span></div>
+            </div>
+            <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)"><path d="M12 3 2 20h20L12 3Z" stroke-linejoin="round"/><path d="M12 10v4M12 17h.01" stroke-linecap="round"/></svg> 1 divergência de preço (+15%) e 1 item sem NF — a ordem fica bloqueada para pagamento até a conciliação.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PANEL 3 — INTELIGÊNCIA AGÊNTICA ============ -->
+      <section class="panel" id="p3">
+        <div class="sec"><h2>Análise Preditiva de Demanda por Categoria</h2><span class="tag rm">Roadmap</span></div>
+        <p class="sec-lead">Os agentes analisam o perfil de cada <b>família de produto</b> ao longo dos últimos 12 meses e classificam a tendência a nível de produto: crescente, linear ou decrescente — com projeção para os próximos 3 meses.</p>
+        <div class="sm-grid" id="sm"></div>
+        <div class="leg-inline" style="margin-top:14px"><span><b style="background:var(--ink);opacity:.5"></b> Histórico 12 meses</span><span><b style="background:var(--green);opacity:.5"></b> Projeção do agente (3 meses)</span></div>
+
+        <div class="two" style="margin-top:26px">
+          <div class="card pane">
+            <div class="ph"><h3>Controle de Estoque — Cobertura em Dias</h3><span class="tag rm">Roadmap</span></div>
+            <p class="sub" style="margin:-4px 0 16px">Para quantos dias o estoque atual cobre o consumo projetado. Abaixo da linha de segurança (15 dias) o agente sugere reposição.</p>
+            <div class="cov" id="cov"></div>
+          </div>
+
+          <div class="card pane">
+            <div class="ph"><h3>Capital Imobilizado — Itens Sem Giro</h3><span class="tag rm">Roadmap</span></div>
+            <p class="sub" style="margin:-4px 0 16px">Itens <b>sem compra há mais de 12 meses</b> e ainda com estoque alto — capital parado, candidato a remanejamento entre filiais.</p>
+            <table class="tbl deadtbl">
+              <thead><tr><th>Item</th><th>Última compra</th><th>Estoque</th><th>Capital parado</th></tr></thead>
+              <tbody id="dead"></tbody>
+            </table>
+            <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="var(--crit)"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg> <b style="color:var(--crit)">R$ 61.300</b> imobilizados em 6 itens — o agente cruza com a demanda projetada e aponta o que descontinuar.</div>
+          </div>
+        </div>
+
+        <div class="sec"><h2>Insights que Valorizam Compras &amp; Supply</h2><span class="tag rm">Roadmap</span></div>
+        <p class="sec-lead">Leituras acionáveis que os agentes entregam sozinhos — transformando compras de centro de custo em área estratégica.</p>
+        <div class="three">
+          <div class="card ins"><div class="ic" style="background:var(--green)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M15 7h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h4>Antecipar reposição de EPIs</h4><p>3 itens de EPI com cobertura abaixo de 15 dias e tendência de alta. Adiantar a compra evita ruptura na safra.</p><span class="act">Ver itens críticos →</span></div></div>
+          <div class="card ins"><div class="ic" style="background:var(--amber)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20L12 3Z" stroke-linejoin="round"/><path d="M12 10v4M12 17h.01" stroke-linecap="round"/></svg></div><div><h4>Anomalia de preço detectada</h4><p>O café subiu 113% vs. média histórica — sinalizado <b>antes</b> da compra, para renegociar o fornecedor.</p><span class="act">Revisar cotação →</span></div></div>
+          <div class="card ins"><div class="ic" style="background:var(--indigo)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16" stroke-linecap="round"/></svg></div><div><h4>Consolidar compras recorrentes</h4><p>Material elétrico tem demanda estável e 5 fornecedores homologados — candidato a contrato guarda-chuva anual.</p><span class="act">Simular contrato →</span></div></div>
+        </div>
+      </section>
+
+      <footer>Protótipo de roadmap · dados derivados da operação-piloto Nutrien (categorias, fornecedores e ordens reais). Alta fidelidade ao design system Cot.ai / eBarn · uso interno para apresentação.</footer>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- Tabs ----------
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on'); document.getElementById(t.dataset.p).classList.add('on');
+  document.querySelector('.content').scrollIntoView({behavior:'smooth',block:'start'});
+}));
+
+const money=n=>'R$ '+n.toLocaleString('pt-BR');
+// donut ring for score
+function ring(v,color){const r=14,c=2*Math.PI*r,off=c*(1-v/100);
+  return `<svg class="ring" viewBox="0 0 34 34"><circle cx="17" cy="17" r="${r}" fill="none" stroke="#eef1f4" stroke-width="4"/><circle cx="17" cy="17" r="${r}" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 17 17)"/></svg>`;}
+
+// ---------- Fornecedores ----------
+const forn=[
+  {n:'MARLUVAS DISTRIBUIDORA GO',c:'EPIs',s:92,cad:98,vel:89,qua:90,ct:14},
+  {n:'SEGURANÇA TOTAL EQUIPAMENTOS',c:'EPIs',s:88,cad:95,vel:84,qua:86,ct:11},
+  {n:'ELÉTRICA RIO VERDE LTDA',c:'Material Elétrico',s:83,cad:90,vel:82,qua:78,ct:13},
+  {n:'PROTEGE EPI COMÉRCIO',c:'EPIs',s:80,cad:92,vel:74,qua:76,ct:9},
+  {n:'ATACADÃO CENTRO OESTE',c:'Copa e Limpeza',s:74,cad:82,vel:71,qua:70,ct:20},
+  {n:'TRANSPORTES CERRADO',c:'Serviços',s:66,cad:75,vel:64,qua:60,ct:7},
+];
+const scoreColor=s=>s>=85?'var(--green)':s>=75?'var(--teal)':s>=65?'var(--amber)':'var(--rose)';
+document.getElementById('forn').innerHTML=forn.map(f=>{
+  const tot=f.cad+f.vel+f.qua, w=x=>(x/tot*100).toFixed(1)+'%';
+  return `<tr><td class="co">${f.n}</td><td class="sub">${f.c}</td>
+   <td><span class="score">${ring(f.s,scoreColor(f.s))}${f.s}</span></td>
+   <td><div class="stk"><i style="width:${w(f.cad)};background:var(--teal)"></i><i style="width:${w(f.vel)};background:var(--blue)"></i><i style="width:${w(f.qua)};background:var(--indigo)"></i></div>
+       <div class="sub tnum" style="margin-top:5px">${f.cad} · ${f.vel} · ${f.qua}</div></td>
+   <td class="tnum sub">${f.ct}</td></tr>`;
+}).join('');
+
+// ---------- Compradores ----------
+const comp=[
+  {n:'Carlos Mendes',s:88,oct:7.2,sav:48200,nps:74},
+  {n:'Fernanda Lima',s:84,oct:8.1,sav:39600,nps:68},
+  {n:'Ana Paula Rocha',s:81,oct:8.6,sav:31400,nps:71},
+  {n:'Roberto Silva',s:77,oct:9.4,sav:22800,nps:59},
+  {n:'Marcos Vinícius',s:72,oct:10.8,sav:14100,nps:52},
+];
+document.getElementById('comp').innerHTML=comp.map(c=>`<tr>
+  <td class="co">${c.n}</td>
+  <td><span class="score">${ring(c.s,scoreColor(c.s))}${c.s}</span></td>
+  <td class="tnum sub">${c.oct.toString().replace('.',',')} dias</td>
+  <td class="tnum">${money(c.sav)}</td>
+  <td><span class="nps"><span class="g"><i style="left:${c.nps}%"></i></span><b class="tnum" style="color:${c.nps>=70?'var(--green)':c.nps>=60?'var(--amber)':'var(--rose)'}">${c.nps}</b></span></td>
+</tr>`).join('');
+
+// ---------- Kanban ----------
+const cols=[
+  {t:'Em campanha',c:'06 Pendentes',cls:'',time:'2h01min',cards:[
+    {id:'#660',ti:'Reposição Chuveiro Lava Olhos',f:'0103',d:'12/08/26',days:'8 dias'},
+    {id:'#659',ti:'Reposição Isolador Roldana',f:'0103',d:'12/08/26',days:'8 dias'},
+    {id:'#658',ti:'Reposição Elo Fusível Alta Tensão',f:'0103',d:'12/08/26',days:'8 dias'},
+    {id:'#653',ti:'Ampliação Armazém Central — CAPEX',f:'0301',d:'11/08/26',days:'65 dias',big:1},
+  ]},
+  {t:'Aceitas',c:'02 Aceitas',cls:'',time:'1h17min',cards:[
+    {id:'#655',ti:'Reposição Luva Látex Procedimento',f:'0103',d:'12/08/26',days:'8 dias',forn:'3'},
+    {id:'#650',ti:'Reposição Material Elétrico',f:'0103',d:'11/08/26',days:'22 dias',forn:'3'},
+  ]},
+  {t:'Cotações em andamento',c:'03 Em Cotações',cls:'amber',time:'2h50min',cards:[
+    {id:'#661',ti:'Compra de capacetes e protetores',f:'0103',d:'12/08/26',days:'9 dias',forn:'2',st:'Restam 1',stc:'var(--amber)'},
+    {id:'#654',ti:'Reposição Etiqueta Bloqueio',f:'0103',d:'12/08/26',days:'8 dias',forn:'1',st:'Nenhuma resposta',stc:'var(--muted)'},
+    {id:'#651',ti:'Transporte Rodoviário',f:'0103',d:'11/08/26',days:'25 dias',forn:'4',st:'Restam 2',stc:'var(--amber)'},
+  ]},
+  {t:'Pendentes de Integração',c:'01 Não completada',cls:'red',time:'10h59min',cards:[
+    {id:'#649',ti:'Reposição EPIs Capacete + Luva',f:'0103',d:'11/08/26',days:'18 dias',forn:'3'},
+  ]},
+  {t:'Aguardando Aprovação',c:'01 Aguardando',cls:'',time:'4 dias',cards:[
+    {id:'#652',ti:'Ampliação Armazém Central — CAPEX',f:'0301',d:'11/08/26',days:'65 dias',forn:'1',st:'AFE-2026-0042 · aprovada',stc:'var(--green)'},
+  ]},
+  {t:'Cotações Concluídas',c:'82 Concluídas',cls:'',time:'',cards:[
+    {id:'#221',ti:'Lanterna Refletora',f:'0103',d:'30/07/26',days:'',forn:'2',done:1},
+    {id:'#222',ti:'Ferramentas e Acessórios',f:'0401',d:'30/07/26',days:'',forn:'1',done:1},
+  ]},
+];
+document.getElementById('kanban').innerHTML=cols.map(col=>`<div class="col">
+  <div class="col-h"><span class="t">${col.t}</span><span class="c ${col.cls}">${col.c}</span></div>
+  ${col.time?`<div class="time">◷ ${col.time}</div>`:''}
+  ${col.cards.map(o=>`<div class="oc${o.big?' hl':''}">
+    <div class="r1"><span class="fil"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg> 01 Filial · ${o.f}</span><span class="id">${o.forn?`▣ ${o.forn}  `:''}${o.id}</span></div>
+    <div class="ti">${o.ti}</div>
+    <div class="meta"><span class="m">📅 ${o.d}</span>${o.days?`<span class="m">⏳ ${o.days}</span>`:o.done?`<span class="m" style="color:var(--green)">✓ concluída</span>`:''}</div>
+    ${o.st?`<div class="st" style="color:${o.stc}">${o.st}</div>`:''}
+  </div>`).join('')}
+</div>`).join('');
+
+// ---------- Demand small-multiples (12mo + 3 forecast) ----------
+const cats=[
+  {t:'EPIs',col:'#6366f1',trend:'up',cover:11,data:[12,14,13,16,18,17,20,19,22,24,23,26],fc:[27,29,31]},
+  {t:'Material Elétrico',col:'#f59e0b',trend:'flat',cover:23,data:[29,31,28,30,32,29,31,30,33,31,30,32],fc:[31,32,31]},
+  {t:'Copa e Limpeza',col:'#0d9488',trend:'flat',cover:18,data:[20,22,19,21,23,20,22,21,23,22,24,23],fc:[23,24,23]},
+  {t:'Serviços',col:'#e11d48',trend:'up',cover:34,data:[6,7,9,8,11,13,12,15,16,18,20,22],fc:[24,26,29]},
+  {t:'Peças & Manutenção',col:'#3b82f6',trend:'down',cover:52,data:[30,28,27,25,24,22,21,19,18,16,15,13],fc:[12,11,9]},
+];
+const months=['S','O','N','D','J','F','M','A','M','J','J','A'];
+const trendMap={up:['b-up','↗ Crescente'],flat:['b-flat','→ Estável'],down:['b-down','↘ Decrescente']};
+document.getElementById('sm').innerHTML=cats.map(c=>{
+  const all=c.data.concat(c.fc), W=230,H=76,pad=4, n=all.length-1;
+  const mx=Math.max(...all)*1.12, x=i=>pad+i*(W-2*pad)/n, y=v=>H-pad-(v/mx)*(H-2*pad);
+  const hist=c.data.map((v,i)=>`${x(i)},${y(v)}`).join(' ');
+  const fcpts=[c.data[c.data.length-1]].concat(c.fc).map((v,i)=>`${x(c.data.length-1+i)},${y(v)}`).join(' ');
+  const area=`M${pad},${H-pad} L${c.data.map((v,i)=>x(i)+','+y(v)).join(' L')} L${x(c.data.length-1)},${H-pad} Z`;
+  const [bc,bt]=trendMap[c.trend];
+  return `<div class="sm">
+    <div class="h"><span class="t">${c.t}</span><span class="badge ${bc}">${bt}</span></div>
+    <svg class="chart" viewBox="0 0 ${W} ${H+14}" role="img" aria-label="${c.t}: tendência ${bt}">
+      ${[0.25,0.5,0.75].map(g=>`<line class="gridln" x1="${pad}" x2="${W-pad}" y1="${H-pad-g*(H-2*pad)}" y2="${H-pad-g*(H-2*pad)}"/>`).join('')}
+      <path d="${area}" fill="${c.col}" opacity=".08"/>
+      <polyline points="${hist}" fill="none" stroke="${c.col}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="${fcpts}" fill="none" stroke="${c.col}" stroke-width="2" stroke-dasharray="2 3" opacity=".65" stroke-linecap="round"/>
+      <circle cx="${x(all.length-1)}" cy="${y(all[all.length-1])}" r="3" fill="${c.col}"/>
+      ${months.map((m,i)=>i%3===0?`<text class="axtx" x="${x(i)}" y="${H+10}" text-anchor="middle">${m}</text>`:'').join('')}
+    </svg>
+    <div class="cover"><span>Cobertura de estoque</span><b style="color:${c.cover<15?'var(--crit)':c.cover>40?'var(--amber)':'var(--ink)'}">${c.cover} dias</b></div>
+  </div>`;
+}).join('');
+
+// ---------- Stock coverage bars ----------
+const cov=[
+  {n:'Capacete V.GARD MSA',d:0,cons:'5/mês'},
+  {n:'Disjuntor Tripolar Siemens',d:5,cons:'8/mês'},
+  {n:'Café em Pó Pilão 500g',d:8,cons:'30/mês'},
+  {n:'Luva Látex Procedimento',d:12,cons:'100/mês'},
+  {n:'Fita Isolante 3M',d:19,cons:'24/mês'},
+  {n:'Botina Bico Composite',d:28,cons:'12/mês'},
+];
+const maxd=45, covColor=d=>d===0?'var(--crit)':d<15?'var(--amber)':'var(--green)';
+document.getElementById('cov').innerHTML=cov.map(c=>`<div class="r">
+  <span class="co" style="font-weight:600">${c.n}<div class="sub" style="font-weight:400">consumo ${c.cons}</div></span>
+  <div class="track"><i style="width:${Math.max(c.d/maxd*100,c.d===0?3:0)}%;background:${covColor(c.d)}"></i><span class="thr" style="left:${15/maxd*100}%" title="Estoque de segurança: 15 dias"></span></div>
+  <span class="d" style="color:${covColor(c.d)}">${c.d===0?'ruptura':c.d+' d'}</span>
+</div>`).join('')+`<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)"><path d="M12 2v20M2 12h20" stroke-linecap="round" opacity=".4"/></svg> A marca vertical é o estoque de segurança (15 dias). Itens à esquerda dela entram na fila de reposição do agente.</div>`;
+
+// ---------- Dead stock ----------
+const dead=[
+  {n:'Rolamento UC 210',m:14,q:'42 un',v:18400},
+  {n:'Peneira Classificação 20×30',m:16,q:'18 un',v:12200},
+  {n:'Perfil U 50×100 Chapa 14',m:13,q:'120 m',v:9800},
+  {n:'Contator CWM50 WEG',m:19,q:'26 un',v:8600},
+  {n:'Tinta Alta Temperatura 3,6L',m:15,q:'34 un',v:7300},
+  {n:'Mesa Reta 1,20×0,60',m:22,q:'9 un',v:5000},
+];
+document.getElementById('dead').innerHTML=dead.map(d=>`<tr>
+  <td class="co">${d.n}</td>
+  <td class="sub tnum">há ${d.m} meses</td>
+  <td class="tnum sub">${d.q}</td>
+  <td class="tnum"><span class="v">${money(d.v)}</span></td>
+</tr>`).join('');
+</script>
